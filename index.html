@@ -1,0 +1,1817 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OrçaFácil Serviços - Protótipo</title>
+  <style>
+    :root {
+      --bg: #eef2f6;
+      --surface: #ffffff;
+      --surface-soft: #f6f8fb;
+      --ink: #172033;
+      --muted: #657387;
+      --line: #cfd8e3;
+      --blue: #145da0;
+      --blue-soft: #dbeafe;
+      --green: #137a46;
+      --green-soft: #dcfce7;
+      --amber: #b56a08;
+      --amber-soft: #fff3cf;
+      --red: #b42318;
+      --shadow: 0 14px 32px rgba(23, 32, 51, 0.09);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.35;
+    }
+
+    button, input, select, textarea {
+      font: inherit;
+    }
+
+    header {
+      background: #101d2f;
+      color: #fff;
+      border-bottom: 5px solid #f3b233;
+    }
+
+    .top {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 18px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: #f3b233;
+      color: #101d2f;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      font-size: 22px;
+      flex: 0 0 auto;
+    }
+
+    .brand-mark.logo-pro {
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, #f3b233 0 48%, #ffffff 48% 52%, #145da0 52% 100%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.22);
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .tagline {
+      color: #ccd8e6;
+      margin-top: 3px;
+      font-size: 14px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: #f8fafc;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    main {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 18px 16px 34px;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: minmax(360px, 0.9fr) minmax(440px, 1.1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfe;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .client-form {
+      padding: 15px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .section-title {
+      grid-column: 1 / -1;
+      padding-top: 4px;
+      color: #101d2f;
+      font-weight: 900;
+      font-size: 14px;
+      border-top: 1px solid #e3e9f0;
+    }
+
+    .section-title:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .field.wide { grid-column: 1 / -1; }
+
+    label {
+      color: #26384f;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #b9c5d4;
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 11px;
+      min-height: 42px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 78px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 3px solid var(--blue-soft);
+      border-color: var(--blue);
+    }
+
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      padding: 15px;
+      background: var(--surface-soft);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .tab {
+      border: 1px solid #c5d0dc;
+      border-radius: 8px;
+      background: #fff;
+      padding: 11px 8px;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 900;
+      color: #21344d;
+      min-height: 58px;
+    }
+
+    .tab span {
+      display: block;
+      font-size: 20px;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .tab.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .catalog {
+      padding: 14px 15px 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .service {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 11px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+      background: #fff;
+    }
+
+    .service strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .service small {
+      color: var(--muted);
+      display: block;
+      margin-top: 3px;
+      font-size: 12px;
+    }
+
+    .price {
+      color: var(--green);
+      font-weight: 900;
+      white-space: nowrap;
+      margin-top: 5px;
+    }
+
+    .add {
+      border: 0;
+      background: var(--green);
+      color: #fff;
+      border-radius: 6px;
+      padding: 9px 11px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .quote {
+      padding: 15px;
+      display: grid;
+      gap: 13px;
+    }
+
+    .quote-list {
+      display: grid;
+      gap: 9px;
+      min-height: 120px;
+    }
+
+    .empty {
+      border: 1px dashed #aebccc;
+      border-radius: var(--radius);
+      padding: 18px;
+      color: var(--muted);
+      background: var(--surface-soft);
+      text-align: center;
+    }
+
+    .quote-item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 11px;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .quote-item h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+
+    .quote-item .meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .item-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .qty {
+      width: 68px;
+      padding: 7px;
+      min-height: 34px;
+      text-align: center;
+    }
+
+    .mini {
+      border: 1px solid #c5d0dc;
+      background: #eef3f8;
+      color: #21344d;
+      border-radius: 6px;
+      min-height: 34px;
+      padding: 0 9px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .mini.danger {
+      color: #7f1d1d;
+      background: #fee4e2;
+      border-color: #fecaca;
+    }
+
+    .summary {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 15px;
+    }
+
+    .row:last-child { border-bottom: 0; }
+    .row.total {
+      background: #ecfdf3;
+      color: #14532d;
+      font-weight: 900;
+      font-size: 20px;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .actions.three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .btn {
+      min-height: 44px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+      padding: 0 12px;
+    }
+
+    .btn.whats {
+      background: #128c4a;
+    }
+
+    .btn.secondary {
+      background: #e8eef5;
+      color: #25364c;
+      border: 1px solid #c5d0dc;
+    }
+
+    .btn.dark {
+      background: #101d2f;
+    }
+
+    .btn.gold {
+      background: #c77808;
+    }
+
+    .preview {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fbfcfe;
+      padding: 12px;
+      color: #24364b;
+      white-space: pre-wrap;
+      min-height: 180px;
+      font-size: 14px;
+    }
+
+    .notice {
+      border: 1px solid #f3c46d;
+      background: var(--amber-soft);
+      color: #713f12;
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      font-size: 13px;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 15px;
+      border-top: 1px solid var(--line);
+      background: #fbfcfe;
+    }
+
+    .photo-box {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .photo-preview {
+      min-height: 150px;
+      border: 1px dashed #aebccc;
+      border-radius: 6px;
+      background: #f6f8fb;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      overflow: hidden;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .photo-preview img {
+      width: 100%;
+      height: 100%;
+      max-height: 210px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .document-tools {
+      padding: 15px;
+      display: grid;
+      gap: 12px;
+      background: #fbfcfe;
+      border-top: 1px solid var(--line);
+    }
+
+    .mode-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      border: 1px solid #c5d0dc;
+      background: #fff;
+      color: #25364c;
+      border-radius: 6px;
+      padding: 10px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .mode-btn.active {
+      background: #101d2f;
+      color: #fff;
+      border-color: #101d2f;
+    }
+
+    .pdf-sheet {
+      margin-top: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .pdf-page {
+      padding: 26px;
+      background: #fff;
+    }
+
+    .pdf-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid #101d2f;
+    }
+
+    .pdf-brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .pdf-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, #f3b233 0 48%, #ffffff 48% 52%, #145da0 52% 100%);
+      color: #101d2f;
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+      font-weight: 900;
+    }
+
+    .pdf-company {
+      font-size: 22px;
+      font-weight: 900;
+      color: #101d2f;
+    }
+
+    .pdf-meta {
+      text-align: right;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .pdf-meta strong {
+      display: block;
+      color: #101d2f;
+      font-size: 20px;
+    }
+
+    .pdf-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .pdf-info {
+      border: 1px solid #dbe3ec;
+      border-radius: 6px;
+      padding: 10px;
+      background: #f8fafc;
+      font-size: 13px;
+    }
+
+    .pdf-info span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .pdf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 12px;
+    }
+
+    .pdf-table th {
+      background: #101d2f;
+      color: #fff;
+      padding: 9px;
+      text-align: left;
+    }
+
+    .pdf-table td {
+      border-bottom: 1px solid #e4eaf1;
+      padding: 9px;
+      vertical-align: top;
+    }
+
+    .pdf-table th:nth-child(n+2),
+    .pdf-table td:nth-child(n+2) {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .pdf-total {
+      width: min(340px, 100%);
+      margin: 15px 0 0 auto;
+      border-top: 2px solid #101d2f;
+      padding-top: 8px;
+    }
+
+    .pdf-total .row {
+      padding: 5px 0;
+      border: 0;
+    }
+
+    .pdf-total .total {
+      background: transparent;
+      color: #14532d;
+      font-size: 19px;
+    }
+
+    .pdf-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .pdf-photo {
+      border: 1px solid #dbe3ec;
+      border-radius: 6px;
+      overflow: hidden;
+      min-height: 160px;
+      background: #f8fafc;
+    }
+
+    .pdf-photo strong {
+      display: block;
+      padding: 8px 10px;
+      background: #edf2f7;
+      border-bottom: 1px solid #dbe3ec;
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #26384f;
+    }
+
+    .pdf-photo img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pdf-photo .empty-photo {
+      height: 190px;
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .closing-box {
+      margin-top: 18px;
+      border: 2px solid #14532d;
+      border-radius: 8px;
+      background: #f0fdf4;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .qr-box {
+      width: 150px;
+      height: 150px;
+      border: 1px solid #bbd6c4;
+      border-radius: 6px;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .qr-box img {
+      width: 150px;
+      height: 150px;
+      display: block;
+    }
+
+    .signature-line {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid #101d2f;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .agenda {
+      margin-top: 16px;
+    }
+
+    .agenda-body {
+      padding: 15px;
+      display: grid;
+      grid-template-columns: minmax(300px, 0.85fr) minmax(360px, 1.15fr);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .schedule-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 11px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+
+    .schedule-form .wide {
+      grid-column: 1 / -1;
+    }
+
+    .schedule-list {
+      display: grid;
+      gap: 9px;
+    }
+
+    .appointment {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: var(--radius);
+      background: #fff;
+      padding: 11px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .appointment.done { border-left-color: var(--green); }
+    .appointment.pending { border-left-color: var(--amber); }
+    .appointment.cancelled { border-left-color: var(--red); opacity: 0.78; }
+
+    .appointment strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .appointment small {
+      color: var(--muted);
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      border: 1px solid #c5d0dc;
+      background: #fff;
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: #26384f;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .chip.busy {
+      background: #eef2f6;
+      color: #8a97a8;
+      text-decoration: line-through;
+      cursor: not-allowed;
+    }
+
+    .status-select {
+      min-height: 34px;
+      padding: 5px 8px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .agenda-body { grid-template-columns: 1fr; }
+      .tabs { grid-template-columns: repeat(2, 1fr); }
+      .pill { white-space: normal; }
+      .actions.three { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .top { align-items: flex-start; flex-direction: column; }
+      .client-form { grid-template-columns: 1fr; }
+      .photo-grid,
+      .pdf-grid,
+      .pdf-photos,
+      .closing-box {
+        grid-template-columns: 1fr;
+      }
+      .schedule-form { grid-template-columns: 1fr; }
+      .actions { grid-template-columns: 1fr; }
+      .quote-item { grid-template-columns: 1fr; }
+      .item-controls { justify-content: flex-start; }
+      h1 { font-size: 22px; }
+      .pdf-head { display: block; }
+      .pdf-meta { text-align: left; margin-top: 12px; }
+      .qr-box { width: 100%; height: auto; padding: 12px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      header,
+      main > .app,
+      .agenda,
+      .document-tools,
+      .panel-head.no-print {
+        display: none !important;
+      }
+      main {
+        max-width: none;
+        padding: 0;
+      }
+      .pdf-sheet {
+        margin: 0;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+      }
+      .pdf-page {
+        padding: 0;
+      }
+    }
+  
+/* Agenda visual: mês e dia */
+.agenda .agenda-body{display:block;padding:20px}.calendar-toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:20px}.calendar-toolbar h3{margin:0;flex:1;min-width:180px;font-size:23px;text-transform:capitalize}.cal-button{border:1px solid #d9e2df;background:white;color:#174d3b;padding:10px 14px;border-radius:12px;cursor:pointer;font:inherit;font-weight:600;min-height:44px}.cal-button[aria-pressed=true],.cal-button.primary{background:#166548;color:white;border-color:#166548}.cal-weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.cal-weekdays{text-align:center;padding-bottom:9px;font-size:12px;font-weight:700;color:#52685f}.cal-day{position:relative;min-width:0;min-height:110px;border:1px solid #e0e8e3;border-radius:10px;background:#f7faf8;padding:7px;text-align:left;cursor:pointer;color:#203b30;overflow:hidden;font:inherit}.cal-day:hover{border-color:#16724e;background:#eef7f1}.cal-day.outside{opacity:.55}.cal-day.selected{outline:2px solid #17734e;outline-offset:-2px}.cal-number{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;font-size:13px;font-weight:700}.cal-day.today .cal-number{background:#166548;color:white;border-radius:50%}.cal-event{display:block;border-radius:4px;padding:3px 5px;margin-top:4px;background:#d9eee2;color:#124e36;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cal-event.pending{background:#fff0c4;color:#785500}.cal-event.done{background:#e3e9ef;color:#45566c}.cal-more{font-size:11px;margin:5px 0 0;color:#38664f}.cal-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:#597267;margin-top:15px}.cal-legend span:before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;background:#5eaf80;margin-right:5px}.cal-legend .pending:before{background:#e2b340}.cal-legend .done:before{background:#8d9cae}.cal-day-heading{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}.cal-day-heading h3{flex:1;margin:0;text-transform:capitalize}.day-scroll{max-height:650px;overflow:auto;border:1px solid #dce6df;border-radius:12px;background:#fff}.day-timeline{position:relative;padding-left:64px}.hour-row{height:44px;border-top:1px solid #e8eee9;position:relative}.hour-label{position:absolute;left:-59px;top:-9px;background:white;padding:0 4px;color:#6c7f74;font-size:12px}.hour-add{position:absolute;inset:0;width:100%;border:0;background:transparent;cursor:pointer;text-align:left;color:transparent;padding-left:12px}.hour-add:hover,.hour-add:focus-visible{color:#166548;background:#f0f8f3}.timeline-event{position:absolute;left:72px;right:12px;border-radius:9px;padding:8px 12px;background:#d9eee2;border-left:4px solid #218054;color:#17482e;overflow:hidden;font-size:13px;pointer-events:none;z-index:1}.timeline-event.pending{background:#fff0c4;border-color:#cb9e2c}.timeline-event.done{background:#e3e9ef;border-color:#8294a6}.timeline-event small{display:block;margin-top:4px}.day-empty{padding:10px 0;color:#607b69;font-size:13px}.day-management{margin-top:20px}.agenda-dialog{border:0;border-radius:22px;padding:0;width:min(570px,94vw);max-height:90vh;overflow:auto;box-shadow:0 20px 90px #0004}.agenda-dialog::backdrop{background:#12271ecc}.dialog-heading{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid #e1e9e3}.dialog-heading h3{margin:0}.agenda-dialog .schedule-form{padding:20px}.agenda-dialog .notice{font-size:12px}.agenda-feedback{color:#ac302c;font-size:14px;padding:10px 0}.agenda-success{color:#166548;font-size:14px;margin:10px 0}.cal-hint{color:#61766b;font-size:13px;margin:0 0 16px}.calendar-surface [hidden]{display:none!important}
+@media(max-width:600px){.agenda .agenda-body{padding:12px}.cal-day{min-height:90px;padding:3px;border-radius:6px}.cal-number{width:24px;height:24px}.cal-event{font-size:10px;padding:3px}.cal-grid,.cal-weekdays{gap:2px}.calendar-toolbar{gap:6px}.calendar-toolbar h3{width:100%;flex-basis:100%;font-size:21px}.cal-button{padding:9px 11px}.cal-day-heading h3{font-size:17px}.timeline-event{font-size:12px}.cal-more{font-size:10px}.agenda-dialog .schedule-form{grid-template-columns:1fr}}
+@media print{.agenda-dialog{display:none}.calendar-toolbar button{display:none}}
+
+</style>
+<meta name="theme-color" content="#166548">
+  <meta name="description" content="Orçamentos de serviços e agenda visual para profissionais autônomos.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+</head>
+<body>
+  <header>
+    <div class="top">
+      <div class="brand">
+        <div class="brand-mark logo-pro">OF</div>
+        <div>
+          <h1>OrçaFácil Serviços</h1>
+          <div class="tagline">Orçamentos rápidos para elétrica, hidráulica, móveis e pequenos reparos</div>
+        </div>
+      </div>
+      <div class="pill">Protótipo para celular - envio pelo WhatsApp</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="app">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Novo orçamento</h2>
+            <p class="sub">Cadastre o cliente e escolha os serviços por categoria.</p>
+          </div>
+        </div>
+
+        <div class="client-form">
+          <div class="section-title">Dados do atendimento</div>
+          <div class="field">
+            <label for="clientName">Cliente</label>
+            <input id="clientName" value="Cliente exemplo" />
+          </div>
+          <div class="field">
+            <label for="clientPhone">WhatsApp</label>
+            <input id="clientPhone" value="" placeholder="DDD + número" inputmode="numeric" />
+          </div>
+          <div class="field">
+            <label for="validity">Validade</label>
+            <select id="validity">
+              <option value="3">3 dias</option>
+              <option value="5" selected>5 dias</option>
+              <option value="7">7 dias</option>
+              <option value="15">15 dias</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="visitFee">Taxa de visita (R$)</label>
+            <input id="visitFee" type="number" min="0" step="1" value="0" />
+          </div>
+          <div class="field wide">
+            <label for="notes">Observações</label>
+            <textarea id="notes">Valores podem mudar se houver material extra, parede muito danificada ou acesso difícil.</textarea>
+          </div>
+          <div class="section-title">Sua marca e fechamento</div>
+          <div class="field">
+            <label for="businessName">Nome no documento</label>
+            <input id="businessName" value="OrçaFácil Serviços" />
+          </div>
+          <div class="field">
+            <label for="documentNumber">Número do documento</label>
+            <input id="documentNumber" value="OF-001" />
+          </div>
+          <div class="field">
+            <label for="providerPhone">Seu telefone</label>
+            <input id="providerPhone" placeholder="DDD + número" inputmode="numeric" />
+          </div>
+          <div class="field">
+            <label for="pixKey">Chave Pix</label>
+            <input id="pixKey" placeholder="CPF, CNPJ, telefone, e-mail ou chave aleatória" />
+          </div>
+          <div class="field">
+            <label for="pixName">Nome do recebedor Pix</label>
+            <input id="pixName" placeholder="Nome que aparece no Pix" />
+          </div>
+          <div class="field">
+            <label for="pixCity">Cidade do Pix</label>
+            <input id="pixCity" value="LONDRINA" />
+          </div>
+        </div>
+
+        <div class="photo-grid">
+          <div class="photo-box">
+            <label for="beforePhoto">Foto antes</label>
+            <input id="beforePhoto" type="file" accept="image/*" capture="environment" />
+            <div class="photo-preview" id="beforePreview">Nenhuma foto antes selecionada</div>
+          </div>
+          <div class="photo-box">
+            <label for="afterPhoto">Foto depois</label>
+            <input id="afterPhoto" type="file" accept="image/*" capture="environment" />
+            <div class="photo-preview" id="afterPreview">Nenhuma foto depois selecionada</div>
+          </div>
+        </div>
+
+        <div class="tabs" id="tabs"></div>
+        <div class="catalog" id="catalog"></div>
+      </section>
+
+      <aside class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Resumo e documento</h2>
+            <p class="sub">Monte o orçamento, gere o PDF profissional e compartilhe com o cliente.</p>
+          </div>
+        </div>
+
+        <div class="quote">
+          <div class="mode-switch">
+            <button class="mode-btn active" id="quoteModeBtn" type="button">Orçamento</button>
+            <button class="mode-btn" id="closingModeBtn" type="button">Fechamento</button>
+          </div>
+          <div class="quote-list" id="quoteList"></div>
+
+          <div class="summary">
+            <div class="row"><span>Serviços</span><strong id="servicesTotal">R$ 0,00</strong></div>
+            <div class="row"><span>Taxa de visita</span><strong id="visitTotal">R$ 0,00</strong></div>
+            <div class="row total"><span>Total</span><strong id="grandTotal">R$ 0,00</strong></div>
+          </div>
+
+          <div class="actions three">
+            <button class="btn whats" id="sharePdfBtn" type="button">Enviar PDF</button>
+            <button class="btn dark" id="pdfBtn" type="button">Baixar PDF</button>
+            <button class="btn secondary" id="clearBtn" type="button">Limpar orçamento</button>
+          </div>
+          <div class="actions">
+            <button class="btn secondary" id="whatsBtn" type="button">Enviar texto simples</button>
+            <button class="btn gold" id="printBtn" type="button">Imprimir</button>
+          </div>
+
+          <div class="notice">
+            Use <strong>Enviar PDF</strong> para mandar o documento profissional. No computador, se o navegador não permitir anexar automaticamente, o PDF será baixado para anexar no WhatsApp.
+          </div>
+
+          <div class="preview" id="messagePreview"></div>
+        </div>
+      </aside>
+    </div>
+
+    <section class="pdf-sheet" id="pdfSheet">
+      <div class="panel-head no-print">
+        <div>
+          <h2>Documento profissional</h2>
+          <p class="sub">Esta é a folha que será impressa ou salva como PDF pelo navegador.</p>
+        </div>
+      </div>
+      <div class="pdf-page" id="pdfDocument"></div>
+    </section>
+
+    <section class="panel agenda" id="agenda">
+      <div class="panel-head">
+        <div>
+          <h2>Agenda de serviços</h2>
+          <p class="sub">Veja o mês completo. Toque em um dia para consultar os horários e marcar um serviço.</p>
+        </div>
+      </div>
+
+      <div class="agenda-body">
+        <div class="calendar-surface">
+          <div class="calendar-toolbar">
+            <h3 id="calendarHeading" aria-live="polite"></h3>
+            <button class="cal-button" id="calPrevious" aria-label="Mês anterior" type="button">‹</button>
+            <button class="cal-button" id="calToday" type="button">Hoje</button>
+            <button class="cal-button" id="calNext" aria-label="Próximo mês" type="button">›</button>
+            <button class="cal-button" id="calMonthMode" aria-pressed="true" type="button">Mês</button>
+            <button class="cal-button" id="calDayMode" aria-pressed="false" type="button">Dia</button>
+            <button class="cal-button primary" id="calNew" type="button">+ Agendar</button>
+          </div>
+          <p class="cal-hint">Selecione um dia para ver a agenda. Use as setas para consultar outros meses.</p>
+          <div id="calendarMonth">
+            <div class="cal-weekdays"><span>dom.</span><span>seg.</span><span>ter.</span><span>qua.</span><span>qui.</span><span>sex.</span><span>sáb.</span></div>
+            <div class="cal-grid" id="calendarGrid" aria-label="Calendário mensal"></div>
+            <div class="cal-legend"><span>Agendado</span><span class="pending">Aguardando aprovação</span><span class="done">Concluído</span></div>
+          </div>
+          <div id="calendarDay" hidden>
+            <div class="cal-day-heading"><button class="cal-button" id="calBack" type="button">← Mês</button><h3 id="dayHeading"></h3></div>
+            <p class="cal-hint">Toque em um horário livre para agendar. Os serviços ocupam toda a sua duração.</p>
+            <div id="daySummary" class="day-empty"></div>
+            <div class="day-scroll"><div id="dayTimeline" class="day-timeline"></div></div>
+            <div class="day-management"><h3>Compromissos deste dia</h3><div class="schedule-list" id="appointmentList"></div></div>
+          </div>
+          <div id="agendaSuccess" class="agenda-success" role="status"></div>
+        </div>
+        <dialog id="agendaDialog" class="agenda-dialog" aria-labelledby="agendaDialogTitle">
+          <div class="dialog-heading"><h3 id="agendaDialogTitle">Agendar serviço</h3><button id="closeAgendaDialog" class="cal-button" type="button" aria-label="Fechar agendamento">✕</button></div>
+        <div class="schedule-form">
+          <div class="field wide">
+            <label for="agendaTitle">Serviço</label>
+            <input id="agendaTitle" placeholder="Ex.: Tomadas da cozinha" />
+          </div>
+          <div class="field">
+            <label for="agendaDate">Data</label>
+            <input id="agendaDate" type="date" />
+          </div>
+          <div class="field">
+            <label for="agendaTime">Horário</label>
+            <select id="agendaTime"></select>
+          </div>
+          <div class="field">
+            <label for="agendaDuration">Duração</label>
+            <select id="agendaDuration">
+              <option value="1">1 hora</option>
+              <option value="2" selected>2 horas</option>
+              <option value="4">meia diária</option>
+              <option value="8">diária</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="agendaStatus">Status</label>
+            <select id="agendaStatus">
+              <option value="pending">Aguardando aprovação</option>
+              <option value="scheduled" selected>Agendado</option>
+              <option value="done">Concluído</option>
+            </select>
+          </div>
+          <div class="field wide">
+            <label for="agendaAddress">Endereço/observação</label>
+            <input id="agendaAddress" placeholder="Bairro, rua ou observação rápida" />
+          </div>
+          <button class="btn wide" id="scheduleBtn" type="button">Agendar serviço</button>
+          <div class="notice wide">Confira o cliente no orçamento. O serviço fica salvo na agenda deste navegador.</div>
+          <div id="availableSlots" hidden></div>
+          <div id="agendaFeedback" class="agenda-feedback wide" role="alert"></div>
+        </div>
+        </dialog>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    const categories = [
+      {
+        id: "eletrica",
+        label: "Elétrica",
+        icon: "⚡",
+        services: [
+          { name: "Troca de tomada ou interruptor simples", unit: "ponto", price: 45, note: "Mão de obra sem material" },
+          { name: "Instalação de luminária simples", unit: "un.", price: 60, note: "Até 3 m de altura" },
+          { name: "Instalação de chuveiro elétrico", unit: "un.", price: 120, note: "Sem alteração de fiação" },
+          { name: "Identificação de circuito no quadro", unit: "hora", price: 90, note: "Diagnóstico e etiquetagem inicial" },
+          { name: "Ponto novo de tomada aparente", unit: "ponto", price: 160, note: "Canaleta/eletroduto aparente, material à parte" }
+        ]
+      },
+      {
+        id: "hidraulica",
+        label: "Hidráulica",
+        icon: "💧",
+        services: [
+          { name: "Troca de torneira", unit: "un.", price: 70, note: "Sem adaptação de bancada" },
+          { name: "Troca de sifão ou flexível", unit: "un.", price: 55, note: "Material à parte" },
+          { name: "Reparo simples em vazamento aparente", unit: "serviço", price: 120, note: "Após avaliação no local" },
+          { name: "Instalação de ducha higiênica", unit: "un.", price: 110, note: "Ponto existente" },
+          { name: "Desentupimento simples de pia", unit: "serviço", price: 140, note: "Sem máquina profissional" }
+        ]
+      },
+      {
+        id: "moveis",
+        label: "Móveis",
+        icon: "🧰",
+        services: [
+          { name: "Desmontagem de móvel pequeno", unit: "un.", price: 80, note: "Criado-mudo, mesa pequena, nicho" },
+          { name: "Desmontagem de guarda-roupa simples", unit: "un.", price: 180, note: "Até 3 portas, sem transporte" },
+          { name: "Montagem de prateleira ou nicho", unit: "un.", price: 65, note: "Parede comum, fixação simples" },
+          { name: "Ajuste de porta/dobradiça de armário", unit: "un.", price: 45, note: "Regulagem ou troca simples" },
+          { name: "Instalação de suporte de TV", unit: "un.", price: 140, note: "Suporte e buchas adequadas à parte" }
+        ]
+      },
+      {
+        id: "reparos",
+        label: "Reparos",
+        icon: "🛠",
+        services: [
+          { name: "Vedação com silicone", unit: "metro", price: 35, note: "Box, pia, bancada ou janela" },
+          { name: "Pequeno reparo em porta", unit: "serviço", price: 90, note: "Fechadura, trinco ou ajuste simples" },
+          { name: "Fixação de varal, quadro ou espelho", unit: "un.", price: 55, note: "Parede comum" },
+          { name: "Troca de fechadura simples", unit: "un.", price: 95, note: "Sem troca estrutural da porta" },
+          { name: "Meia diária de pequenos reparos", unit: "4 h", price: 280, note: "Lista combinada de tarefas leves" }
+        ]
+      }
+    ];
+
+    let activeCategory = "eletrica";
+    let quote = [];
+    let appointments = [];
+    let documentMode = "quote";
+    let beforePhotoData = "";
+    let afterPhotoData = "";
+    const workSlots = Array.from({length: 28}, (_, i) => `${String(7 + Math.floor(i / 2)).padStart(2, "0")}:${i % 2 ? "30" : "00"}`);
+
+    const $ = (id) => document.getElementById(id);
+    const currency = (value) => value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    const escapeHtml = (value) => String(value || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;");
+
+    function renderTabs() {
+      $("tabs").innerHTML = categories.map((cat) => `
+        <button class="tab ${cat.id === activeCategory ? "active" : ""}" data-cat="${cat.id}" type="button">
+          <span>${cat.icon}</span>${cat.label}
+        </button>
+      `).join("");
+    }
+
+    function renderCatalog() {
+      const category = categories.find((cat) => cat.id === activeCategory);
+      $("catalog").innerHTML = category.services.map((service, index) => `
+        <div class="service">
+          <div>
+            <strong>${service.name}</strong>
+            <small>${service.note}</small>
+            <div class="price">${currency(service.price)} / ${service.unit}</div>
+          </div>
+          <button class="add" data-index="${index}" type="button">Adicionar</button>
+        </div>
+      `).join("");
+    }
+
+    function addService(index) {
+      const category = categories.find((cat) => cat.id === activeCategory);
+      const service = category.services[index];
+      quote.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        category: category.label,
+        icon: category.icon,
+        name: service.name,
+        unit: service.unit,
+        price: service.price,
+        note: service.note,
+        qty: 1
+      });
+      renderQuote();
+    }
+
+    function updateQty(id, qty) {
+      quote = quote.map((item) => item.id === id ? { ...item, qty: Math.max(1, Number(qty) || 1) } : item);
+      renderQuote();
+    }
+
+    function removeItem(id) {
+      quote = quote.filter((item) => item.id !== id);
+      renderQuote();
+    }
+
+    function totals() {
+      const services = quote.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const visit = Number($("visitFee").value) || 0;
+      return { services, visit, total: services + visit };
+    }
+
+    function todayBR() {
+      return todayISO().split("-").reverse().join("/");
+    }
+
+    function currentDocumentTitle() {
+      return documentMode === "closing" ? "Fechamento do serviço" : "Orçamento de serviços";
+    }
+
+    function pixPayload() {
+      const pixKey = $("pixKey").value.trim();
+      const businessName = ($("pixName").value.trim() || $("businessName").value.trim() || "ORCAFACIL").slice(0, 25);
+      const city = ($("pixCity").value.trim() || "LONDRINA").toUpperCase().slice(0, 15);
+      const total = totals().total.toFixed(2);
+      if (!pixKey) return "";
+      return `PIX\nChave: ${pixKey}\nRecebedor: ${businessName}\nCidade: ${city}\nValor: R$ ${total}`;
+    }
+
+    function qrUrl() {
+      const payload = pixPayload();
+      if (!payload) return "";
+      return `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(payload)}`;
+    }
+
+    function pdfFileName() {
+      const docNumber = ($("documentNumber").value.trim() || "OF-001").replace(/[^\w-]+/g, "-");
+      const client = ($("clientName").value.trim() || "cliente").replace(/[^\w-]+/g, "-");
+      return `${docNumber}-${client}-${documentMode === "closing" ? "fechamento" : "orcamento"}.pdf`.toLowerCase();
+    }
+
+    async function generatePdfBlob() {
+      if (!window.html2canvas || !window.jspdf) {
+        throw new Error("As bibliotecas de PDF ainda não carregaram. Verifique a internet e tente novamente.");
+      }
+      renderPdfDocument();
+      const source = $("pdfDocument");
+      const canvas = await html2canvas(source, {
+        scale: 2,
+        backgroundColor: "#ffffff",
+        useCORS: true
+      });
+      const imageData = canvas.toDataURL("image/jpeg", 0.96);
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF("p", "mm", "a4");
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 8;
+      const imgWidth = pageWidth - margin * 2;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = margin;
+
+      pdf.addImage(imageData, "JPEG", margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight - margin * 2;
+
+      while (heightLeft > 0) {
+        pdf.addPage();
+        position = margin - (imgHeight - heightLeft);
+        pdf.addImage(imageData, "JPEG", margin, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight - margin * 2;
+      }
+
+      return pdf.output("blob");
+    }
+
+    async function downloadPdf() {
+      try {
+        $("pdfBtn").textContent = "Gerando...";
+        const blob = await generatePdfBlob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = pdfFileName();
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 3000);
+      } catch (error) {
+        alert(error.message || "Não foi possível gerar o PDF.");
+      } finally {
+        $("pdfBtn").textContent = "Baixar PDF";
+      }
+    }
+
+    async function sharePdf() {
+      try {
+        $("sharePdfBtn").textContent = "Gerando...";
+        const blob = await generatePdfBlob();
+        const file = new File([blob], pdfFileName(), { type: "application/pdf" });
+        if (navigator.canShare && navigator.canShare({ files: [file] }) && navigator.share) {
+          await navigator.share({
+            title: currentDocumentTitle(),
+            text: `Segue ${currentDocumentTitle().toLowerCase()} do ${$("businessName").value.trim() || "OrçaFácil Serviços"}.`,
+            files: [file]
+          });
+        } else {
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = file.name;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 3000);
+          alert("PDF gerado. No computador, anexe o arquivo baixado na conversa do WhatsApp. No celular, este botão pode abrir o compartilhamento direto para escolher o WhatsApp.");
+        }
+      } catch (error) {
+        alert(error.message || "Não foi possível gerar ou compartilhar o PDF.");
+      } finally {
+        $("sharePdfBtn").textContent = "Enviar PDF";
+      }
+    }
+
+    function buildMessage() {
+      const client = $("clientName").value.trim() || "cliente";
+      const validity = $("validity").value;
+      const notes = $("notes").value.trim();
+      const total = totals();
+      const business = $("businessName").value.trim() || "OrçaFácil Serviços";
+      const docNumber = $("documentNumber").value.trim() || "OF-001";
+      const lines = [
+        `Olá, ${client}! Segue ${documentMode === "closing" ? "fechamento" : "orçamento inicial"} ${docNumber} - ${business}:`,
+        "",
+        ...quote.map((item, idx) => `${idx + 1}. ${item.name} - ${item.qty} ${item.unit} x ${currency(item.price)} = ${currency(item.qty * item.price)}`),
+        ...(total.visit > 0 ? [`Taxa de visita: ${currency(total.visit)}`] : []),
+        "",
+        `Total: ${currency(total.total)}`,
+        ...(documentMode === "quote" ? [`Validade: ${validity} dias`] : []),
+        ...(documentMode === "closing" && $("pixKey").value.trim() ? [`Pix para pagamento: ${$("pixKey").value.trim()}`] : []),
+        "",
+        notes ? `Observações: ${notes}` : "",
+        "",
+        documentMode === "closing"
+          ? "Assim que o pagamento for identificado, sigo com a baixa do pedido."
+          : "Se estiver de acordo, posso agendar a visita/execução do serviço."
+      ].filter(Boolean);
+      return lines.join("\n");
+    }
+
+    function renderPhoto(previewId, data, label) {
+      $(previewId).innerHTML = data
+        ? `<img src="${data}" alt="${label}">`
+        : `Nenhuma foto ${label.toLowerCase()} selecionada`;
+    }
+
+    function handlePhoto(inputId, previewId, target) {
+      const file = $(inputId).files && $(inputId).files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (target === "before") beforePhotoData = reader.result;
+        if (target === "after") afterPhotoData = reader.result;
+        renderPhoto(previewId, reader.result, target === "before" ? "Antes" : "Depois");
+        saveFormState();
+        renderQuote();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveFormState() {
+      const form = {
+        clientName: $("clientName").value,
+        clientPhone: $("clientPhone").value,
+        validity: $("validity").value,
+        visitFee: $("visitFee").value,
+        notes: $("notes").value,
+        businessName: $("businessName").value,
+        documentNumber: $("documentNumber").value,
+        providerPhone: $("providerPhone").value,
+        pixKey: $("pixKey").value,
+        pixName: $("pixName").value,
+        pixCity: $("pixCity").value,
+        documentMode,
+        beforePhotoData,
+        afterPhotoData
+      };
+      try {
+        localStorage.setItem("orcafacil-form", JSON.stringify(form));
+      } catch {
+        localStorage.setItem("orcafacil-form", JSON.stringify({ ...form, beforePhotoData: "", afterPhotoData: "" }));
+      }
+    }
+
+    function renderPdfDocument() {
+      const total = totals();
+      const business = $("businessName").value.trim() || "OrçaFácil Serviços";
+      const docNumber = $("documentNumber").value.trim() || "OF-001";
+      const notes = $("notes").value.trim();
+      const pix = pixPayload();
+      const qr = qrUrl();
+      const rows = quote.length ? quote.map((item) => `
+        <tr>
+          <td><strong>${escapeHtml(item.name)}</strong><br><span style="color:#657387">${escapeHtml(item.note)} · ${escapeHtml(item.category)}</span></td>
+          <td>${item.qty}</td>
+          <td>${currency(item.price)}</td>
+          <td>${currency(item.qty * item.price)}</td>
+        </tr>
+      `).join("") : `<tr><td colspan="4">Nenhum serviço adicionado.</td></tr>`;
+
+      const photoBlock = documentMode === "closing" || beforePhotoData || afterPhotoData ? `
+        <div class="pdf-photos">
+          <div class="pdf-photo">
+            <strong>Antes</strong>
+            ${beforePhotoData ? `<img src="${beforePhotoData}" alt="Foto antes">` : `<div class="empty-photo">Foto antes não adicionada</div>`}
+          </div>
+          <div class="pdf-photo">
+            <strong>Depois</strong>
+            ${afterPhotoData ? `<img src="${afterPhotoData}" alt="Foto depois">` : `<div class="empty-photo">Foto depois não adicionada</div>`}
+          </div>
+        </div>
+      ` : "";
+
+      const closingBlock = documentMode === "closing" ? `
+        <div class="closing-box">
+          <div>
+            <h3 style="margin:0 0 8px;color:#14532d">Pagamento via Pix</h3>
+            <div><strong>Valor:</strong> ${currency(total.total)}</div>
+            <div><strong>Chave Pix:</strong> ${escapeHtml($("pixKey").value.trim() || "Informe a chave Pix")}</div>
+            <div><strong>Recebedor:</strong> ${escapeHtml($("pixName").value.trim() || business)}</div>
+            <p style="margin:10px 0 0;color:#335144;font-size:13px">O cliente pode ler o QR Code ou copiar a chave Pix para concluir o pagamento.</p>
+          </div>
+          <div class="qr-box">
+            ${pix && qr ? `<img src="${qr}" alt="QR Code Pix">` : `<span style="padding:12px;text-align:center;color:#657387;font-size:12px">Informe a chave Pix para gerar o QR Code</span>`}
+          </div>
+        </div>
+        <div class="signature-line">Assinatura/aceite do cliente</div>
+      ` : "";
+
+      $("pdfDocument").innerHTML = `
+        <div class="pdf-head">
+          <div class="pdf-brand">
+            <div class="pdf-logo">OF</div>
+            <div>
+              <div class="pdf-company">${escapeHtml(business)}</div>
+              <div style="color:#657387">Elétrica, hidráulica, móveis e pequenos reparos</div>
+              <div style="color:#657387">${escapeHtml($("providerPhone").value.trim())}</div>
+            </div>
+          </div>
+          <div class="pdf-meta">
+            <strong>${escapeHtml(docNumber)}</strong>
+            ${currentDocumentTitle()}<br>
+            Emitido em ${todayBR()}
+          </div>
+        </div>
+
+        <div class="pdf-grid">
+          <div class="pdf-info"><span>Cliente</span>${escapeHtml($("clientName").value.trim() || "Cliente não informado")}</div>
+          <div class="pdf-info"><span>WhatsApp</span>${escapeHtml($("clientPhone").value.trim() || "Não informado")}</div>
+          <div class="pdf-info"><span>Validade</span>${documentMode === "quote" ? `${escapeHtml($("validity").value)} dias` : "Serviço aprovado / fechamento"}</div>
+          <div class="pdf-info"><span>Total</span>${currency(total.total)}</div>
+        </div>
+
+        <table class="pdf-table">
+          <thead>
+            <tr>
+              <th>Serviço</th>
+              <th>Qtd.</th>
+              <th>Valor unit.</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+
+        <div class="pdf-total">
+          <div class="row"><span>Serviços</span><strong>${currency(total.services)}</strong></div>
+          <div class="row"><span>Taxa de visita</span><strong>${currency(total.visit)}</strong></div>
+          <div class="row total"><span>Total</span><strong>${currency(total.total)}</strong></div>
+        </div>
+
+        ${notes ? `<div class="notice" style="margin-top:18px"><strong>Observações:</strong><br>${escapeHtml(notes)}</div>` : ""}
+        ${photoBlock}
+        ${closingBlock}
+      `;
+    }
+
+    function setDocumentMode(mode) {
+      documentMode = mode;
+      $("quoteModeBtn").classList.toggle("active", mode === "quote");
+      $("closingModeBtn").classList.toggle("active", mode === "closing");
+      saveFormState();
+      renderQuote();
+    }
+
+    function renderQuote() {
+      const list = $("quoteList");
+      if (!quote.length) {
+        list.innerHTML = `<div class="empty">Escolha uma categoria e adicione serviços para montar o orçamento.</div>`;
+      } else {
+        list.innerHTML = quote.map((item) => `
+          <div class="quote-item">
+            <div>
+              <h3>${item.icon} ${item.name}</h3>
+              <div class="meta">${item.category} · ${currency(item.price)} / ${item.unit}</div>
+            </div>
+            <div class="item-controls">
+              <input class="qty" type="number" min="1" value="${item.qty}" data-qty="${item.id}" />
+              <strong>${currency(item.qty * item.price)}</strong>
+              <button class="mini danger" data-remove="${item.id}" type="button">Remover</button>
+            </div>
+          </div>
+        `).join("");
+      }
+
+      const total = totals();
+      $("servicesTotal").textContent = currency(total.services);
+      $("visitTotal").textContent = currency(total.visit);
+      $("grandTotal").textContent = currency(total.total);
+      $("messagePreview").textContent = buildMessage();
+      renderPdfDocument();
+      localStorage.setItem("orcafacil-prototipo", JSON.stringify({ quote, activeCategory }));
+      saveFormState();
+      if (!$("agendaTitle").value && quote.length) {
+        $("agendaTitle").value = quote[0].name;
+      }
+    }
+
+    function todayISO() {
+      const date = new Date();
+      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      return date.toISOString().slice(0, 10);
+    }
+
+    function renderTimeOptions() {
+      $("agendaTime").innerHTML = workSlots.map((slot) => `<option value="${slot}">${slot}</option>`).join("");
+    }
+
+    function selectedDateAppointments() {
+      const date = $("agendaDate").value;
+      return appointments.filter((item) => item.date === date && item.status !== "cancelled");
+    }
+
+    function timeMinutes(value) { const [h,m] = value.split(":").map(Number); return h * 60 + m; }
+    function hasConflict(date, time, duration) {
+      const start = timeMinutes(time), end = start + duration * 60;
+      return appointments.some(item => item.date === date && item.status !== "cancelled" && start < timeMinutes(item.time) + Number(item.duration) * 60 && end > timeMinutes(item.time));
+    }
+    function renderAvailableSlots() {
+      const date = $("agendaDate").value, duration = Number($("agendaDuration").value) || 2;
+      [...$("agendaTime").options].forEach(option => { option.disabled = hasConflict(date, option.value, duration) || timeMinutes(option.value) + duration * 60 > 1260; });
+    }
+
+    function statusLabel(status) {
+      const labels = {
+        pending: "Aguardando aprovação",
+        scheduled: "Agendado",
+        done: "Concluído",
+        cancelled: "Cancelado"
+      };
+      return labels[status] || status;
+    }
+
+    function nextQuoteTitle() {
+      if (quote.length === 0) return "Serviço residencial";
+      if (quote.length === 1) return quote[0].name;
+      return `${quote[0].name} + ${quote.length - 1} item(ns)`;
+    }
+
+    function scheduleCurrentQuote() {
+      const title = $("agendaTitle").value.trim() || nextQuoteTitle();
+      const appointment = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        title,
+        client: $("clientName").value.trim() || "Cliente",
+        date: $("agendaDate").value || todayISO(),
+        time: $("agendaTime").value,
+        duration: Number($("agendaDuration").value) || 2,
+        status: $("agendaStatus").value,
+        address: $("agendaAddress").value.trim(),
+        total: totals().total
+      };
+      if (!$("agendaDate").value || !appointment.time) { $("agendaFeedback").textContent = "Escolha a data e o horário."; return; }
+      if (timeMinutes(appointment.time) + appointment.duration * 60 > 1260) { $("agendaFeedback").textContent = "O atendimento deve terminar até 21h. Escolha outro horário ou duração."; return; }
+      if (hasConflict(appointment.date, appointment.time, appointment.duration) && appointment.status !== "cancelled") { $("agendaFeedback").textContent = "Esse período já tem um compromisso. Escolha outro horário."; return; }
+      appointments.push(appointment);
+      saveAgenda();
+      calendarSelected = appointment.date;
+      calendarCursor = new Date(appointment.date + "T12:00:00");
+      calendarMode = "day";
+      $("agendaDialog").close();
+      $("agendaSuccess").textContent = "Serviço agendado para " + appointment.date.split("-").reverse().join("/") + " às " + appointment.time + ".";
+      renderAgenda();
+    }
+
+    function saveAgenda() {
+      localStorage.setItem("orcafacil-agenda", JSON.stringify(appointments));
+    }
+
+    function renderAgenda() {
+      appointments.sort((a, b) => `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`));
+      renderAvailableSlots();
+      renderCalendar();
+      const dayItems = appointments.filter(item => item.date === calendarSelected);
+      if (!dayItems.length) {
+        $("appointmentList").innerHTML = `<div class="empty">Nenhum serviço neste dia. Toque em um horário ou em + Agendar.</div>`;
+        return;
+      }
+      $("appointmentList").innerHTML = dayItems.map((item) => `
+        <div class="appointment ${item.status}">
+          <div>
+            <strong>${item.date.split("-").reverse().join("/")} às ${item.time} - ${item.title}</strong>
+            <small>${item.client} · ${item.duration} h · ${item.address || "sem endereço informado"} · ${currency(item.total)}</small>
+          </div>
+          <div class="item-controls">
+            <select class="status-select" data-status="${item.id}">
+              <option value="pending" ${item.status === "pending" ? "selected" : ""}>Aguardando</option>
+              <option value="scheduled" ${item.status === "scheduled" ? "selected" : ""}>Agendado</option>
+              <option value="done" ${item.status === "done" ? "selected" : ""}>Concluído</option>
+              <option value="cancelled" ${item.status === "cancelled" ? "selected" : ""}>Cancelado</option>
+            </select>
+            <button class="mini danger" data-delete-appointment="${item.id}" type="button">Excluir</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function openWhatsApp() {
+      const phone = $("clientPhone").value.replace(/\D/g, "");
+      const message = encodeURIComponent(buildMessage());
+      const url = phone ? `https://wa.me/55${phone}?text=${message}` : `https://wa.me/?text=${message}`;
+      window.open(url, "_blank");
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("orcafacil-prototipo") || "{}");
+        if (Array.isArray(saved.quote)) quote = saved.quote;
+        if (saved.activeCategory) activeCategory = saved.activeCategory;
+      } catch {
+        quote = [];
+      }
+      try {
+        const form = JSON.parse(localStorage.getItem("orcafacil-form") || "{}");
+        ["clientName", "clientPhone", "validity", "visitFee", "notes", "businessName", "documentNumber", "providerPhone", "pixKey", "pixName", "pixCity"].forEach((id) => {
+          if (form[id] !== undefined && $(id)) $(id).value = form[id];
+        });
+        if (form.documentMode) documentMode = form.documentMode;
+        beforePhotoData = form.beforePhotoData || "";
+        afterPhotoData = form.afterPhotoData || "";
+      } catch {
+        beforePhotoData = "";
+        afterPhotoData = "";
+      }
+      try {
+        const agenda = JSON.parse(localStorage.getItem("orcafacil-agenda") || "[]");
+        if (Array.isArray(agenda)) appointments = agenda;
+      } catch {
+        appointments = [];
+      }
+    }
+
+    $("tabs").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-cat]");
+      if (!button) return;
+      activeCategory = button.dataset.cat;
+      renderTabs();
+      renderCatalog();
+      renderQuote();
+    });
+
+    $("catalog").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-index]");
+      if (!button) return;
+      addService(Number(button.dataset.index));
+    });
+
+    $("quoteList").addEventListener("input", (event) => {
+      const input = event.target.closest("[data-qty]");
+      if (!input) return;
+      updateQty(input.dataset.qty, input.value);
+    });
+
+    $("quoteList").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove]");
+      if (!button) return;
+      removeItem(button.dataset.remove);
+    });
+
+    ["clientName", "clientPhone", "validity", "visitFee", "notes", "businessName", "documentNumber", "providerPhone", "pixKey", "pixName", "pixCity"].forEach((id) => {
+      $(id).addEventListener("input", renderQuote);
+      $(id).addEventListener("change", renderQuote);
+    });
+
+    $("whatsBtn").addEventListener("click", openWhatsApp);
+    $("pdfBtn").addEventListener("click", downloadPdf);
+    $("sharePdfBtn").addEventListener("click", sharePdf);
+    $("printBtn").addEventListener("click", () => window.print());
+    $("quoteModeBtn").addEventListener("click", () => setDocumentMode("quote"));
+    $("closingModeBtn").addEventListener("click", () => setDocumentMode("closing"));
+    $("beforePhoto").addEventListener("change", () => handlePhoto("beforePhoto", "beforePreview", "before"));
+    $("afterPhoto").addEventListener("change", () => handlePhoto("afterPhoto", "afterPreview", "after"));
+    $("clearBtn").addEventListener("click", () => {
+      quote = [];
+      renderQuote();
+    });
+    $("scheduleBtn").addEventListener("click", scheduleCurrentQuote);
+    $("agendaDate").addEventListener("change", renderAvailableSlots);
+    $("availableSlots").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-slot]");
+      if (!button || button.disabled) return;
+      $("agendaTime").value = button.dataset.slot;
+      renderAvailableSlots();
+    });
+    $("appointmentList").addEventListener("change", (event) => {
+      const select = event.target.closest("[data-status]");
+      if (!select) return;
+      appointments = appointments.map((item) => item.id === select.dataset.status ? { ...item, status: select.value } : item);
+      saveAgenda();
+      renderAgenda();
+    });
+    $("appointmentList").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-delete-appointment]");
+      if (!button) return;
+      appointments = appointments.filter((item) => item.id !== button.dataset.deleteAppointment);
+      saveAgenda();
+      renderAgenda();
+    });
+
+
+    let calendarSelected = todayISO();
+    let calendarCursor = new Date(calendarSelected + "T12:00:00");
+    let calendarMode = "month";
+    function dateKey(date) { return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`; }
+    function setCalendarDay(date) {
+      calendarSelected = date; calendarCursor = new Date(date + "T12:00:00");
+      calendarMode = "day"; $("agendaDate").value = date;
+      $("agendaSuccess").textContent = ""; renderAgenda();
+    }
+    function openAgendaForm(time) {
+      $("agendaDate").value = calendarSelected;
+      $("agendaFeedback").textContent = "";
+      renderAvailableSlots();
+      if (time) $("agendaTime").value = time;
+      else { const first = [...$("agendaTime").options].find(option => !option.disabled); if (first) $("agendaTime").value = first.value; }
+      $("agendaDialog").showModal();
+      $("agendaTitle").focus();
+    }
+    function renderCalendar() {
+      $("calendarHeading").textContent = calendarCursor.toLocaleDateString("pt-BR",{month:"long",year:"numeric"});
+      $("calendarMonth").hidden = calendarMode !== "month";
+      $("calendarDay").hidden = calendarMode !== "day";
+      $("calMonthMode").setAttribute("aria-pressed", String(calendarMode === "month"));
+      $("calDayMode").setAttribute("aria-pressed", String(calendarMode === "day"));
+      $("calPrevious").setAttribute("aria-label",calendarMode === "month" ? "Mês anterior" : "Dia anterior");
+      $("calNext").setAttribute("aria-label",calendarMode === "month" ? "Próximo mês" : "Próximo dia");
+      const first = new Date(calendarCursor.getFullYear(),calendarCursor.getMonth(),1,12);
+      first.setDate(first.getDate()-first.getDay());
+      $("calendarGrid").innerHTML = Array.from({length:42},(_,i)=>{
+        const date = new Date(first); date.setDate(first.getDate()+i);
+        const key = dateKey(date);
+        const items = appointments.filter(item=>item.date===key && item.status!=="cancelled").sort((a,b)=>a.time.localeCompare(b.time));
+        return `<button type="button" class="cal-day ${date.getMonth()!==calendarCursor.getMonth()?"outside":""} ${key===todayISO()?"today":""} ${key===calendarSelected?"selected":""}" data-calendar-date="${key}" aria-label="${date.toLocaleDateString("pt-BR",{day:"numeric",month:"long",year:"numeric"})}, ${items.length} compromisso(s)" ${key===todayISO()?'aria-current="date"':''}><span class="cal-number">${date.getDate()}</span>${items.slice(0,2).map(item=>`<span class="cal-event ${escapeHtml(item.status)}">${item.time} ${escapeHtml(item.title)}</span>`).join("")}${items.length>2?`<div class="cal-more">+${items.length-2} mais</div>`:""}</button>`;
+      }).join("");
+      $("dayHeading").textContent = new Date(calendarSelected+"T12:00:00").toLocaleDateString("pt-BR",{weekday:"long",day:"numeric",month:"long"});
+      const items = appointments.filter(item=>item.date===calendarSelected && item.status!=="cancelled");
+      $("daySummary").textContent = items.length ? `${items.length} compromisso(s) neste dia` : "Dia livre. Escolha um horário abaixo.";
+      $("dayTimeline").innerHTML = workSlots.map(time=>`<div class="hour-row"><span class="hour-label">${time}</span><button class="hour-add" data-calendar-time="${time}" type="button" aria-label="Agendar às ${time}">+ Agendar às ${time}</button></div>`).join("") + items.map(item=>{
+        const start=timeMinutes(item.time), end=start+Number(item.duration)*60;
+        const top=Math.max(0,(start-420)/30*44), height=Math.max(30,(Math.min(end,1260)-Math.max(start,420))/30*44-3);
+        if(end<=420 || start>=1260) return "";
+        return `<div class="timeline-event ${escapeHtml(item.status)}" style="top:${top}px;height:${height}px"><strong>${escapeHtml(item.time)} · ${escapeHtml(item.title)}</strong><small>${escapeHtml(item.client)} · ${item.duration} h · ${escapeHtml(statusLabel(item.status))}</small></div>`;
+      }).join("");
+    }
+    $("calendarGrid").addEventListener("click",event=>{const day=event.target.closest("[data-calendar-date]");if(day)setCalendarDay(day.dataset.calendarDate);});
+    $("dayTimeline").addEventListener("click",event=>{const slot=event.target.closest("[data-calendar-time]");if(slot)openAgendaForm(slot.dataset.calendarTime);});
+    function moveCalendar(direction) {
+      if(calendarMode === "day") { const day=new Date(calendarSelected+"T12:00:00");day.setDate(day.getDate()+direction);setCalendarDay(dateKey(day)); }
+      else { calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+direction,1,12);renderCalendar(); }
+    }
+    $("calPrevious").addEventListener("click",()=>moveCalendar(-1));
+    $("calNext").addEventListener("click",()=>moveCalendar(1));
+    $("calToday").addEventListener("click",()=>{calendarSelected=todayISO();calendarCursor=new Date(calendarSelected+"T12:00:00");$("agendaDate").value=calendarSelected;renderAgenda();});
+    ["calMonthMode","calBack"].forEach(id=>$(id).addEventListener("click",()=>{calendarMode="month";renderCalendar();}));
+    $("calDayMode").addEventListener("click",()=>setCalendarDay(calendarSelected));
+    $("calNew").addEventListener("click",()=>openAgendaForm());
+    $("closeAgendaDialog").addEventListener("click",()=>$("agendaDialog").close());
+    $("agendaDuration").addEventListener("change",renderAvailableSlots);
+
+    loadState();
+    renderPhoto("beforePreview", beforePhotoData, "Antes");
+    renderPhoto("afterPreview", afterPhotoData, "Depois");
+    setDocumentMode(documentMode);
+    $("agendaDate").value = todayISO();
+    renderTimeOptions();
+    renderTabs();
+    renderCatalog();
+    renderQuote();
+    renderAgenda();
+  </script>
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
