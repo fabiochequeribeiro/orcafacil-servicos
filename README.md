@@ -1,25 +1,19 @@
-# OrçaFácil Serviços
+# OrçaFácil / OrcaFacil Pro
 
-Aplicativo web para orçamentos de elétrica, hidráulica, móveis e pequenos reparos, com agenda mensal e diária, fechamento com fotos, Pix e PDF.
+## Aplicativo Android instalado no celular
 
-## Abrir e instalar
+O **OrcaFacil Pro** é o aplicativo Android nativo. Seu código está em [android-app](android-app/).
+
+Baixar o APK 1.3: https://github.com/fabiochequeribeiro/orcafacil-servicos/releases/download/android-v1.3.0/OrcaFacil-Pro-1.3.apk
+
+Instale sobre a versão anterior, sem desinstalar ou limpar dados. A assinatura desta distribuição de testes corresponde à do APK 1.2 anterior. Não é uma publicação na Play Store. O funcionamento no aparelho físico ainda depende de conferência do usuário.
+
+## Protótipo web separado
 
 https://fabiochequeribeiro.github.io/orcafacil-servicos/
 
-No Android, abra o endereço no Chrome e use o menu **Instalar aplicativo** ou **Adicionar à tela inicial**. Reabra o app com internet para obter atualizações.
-
-## Dados
-
-Os dados ficam no armazenamento local do navegador. Não há banco de dados remoto ou sincronização com Google Agenda. Dados de outra origem ou de um arquivo HTML local não são transferidos automaticamente. Não desinstale a versão antiga nem limpe seus dados antes de conferir os registros.
-
-O aplicativo pode abrir offline depois do primeiro acesso. Geração de PDF depende das bibliotecas externas da CDN; QR Code Pix e compartilhamento dependem de internet. Preços do catálogo são exemplos editáveis no código, não uma tabela de mercado validada.
+O HTML na raiz é o protótipo web, separado dos dados e da instalação Android. Os dados não migram automaticamente entre as duas versões. Orçamentos, agenda, contratos e fotos do aplicativo Android ficam no aparelho; não há sincronização com o Google Agenda.
 
 ## Histórico
 
-15/10/2026: agenda mensal com compromissos destacados, grade diária, agendamento por horário e bloqueio de sobreposição. Inclusão de manifesto e service worker para instalação como aplicativo web.
-
-## Executar localmente
-
-`python -m http.server 8000`
-
-Abra http://localhost:8000. Nenhuma etapa de build é necessária.
+1.3.0: calendário mensal com compromissos identificados, grade diária, duração dos eventos e verificação de sobreposição.

@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "OrcaFacil Pro",
+    "slug": "orcafacil-native",
+    "version": "1.3.0",
+    "scheme": "orcafacil",
+    "orientation": "default",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "Permitir fotografar o antes e depois dos serviços.",
+          "microphonePermission": false
+        }
+      ],
+      "expo-font",
+      "expo-sharing",
+      "expo-router"
+    ],
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "com.brs.orcafacilpro",
+      "versionCode": 5,
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}

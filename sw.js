@@ -1,4 +1,4 @@
-const CACHE = 'orcafacil-2026-10-15-agenda-v1';
+const CACHE = 'orcafacil-2026-10-15-agenda-v2';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting()));
