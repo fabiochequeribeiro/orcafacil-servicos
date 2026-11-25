@@ -15,3 +15,7 @@
 - Windows 1.30.2 de teste: atualizador e ZIP de reconstrução disponíveis no rascunho **Orça Fácil Pro — backup dos instaladores**, na [página de releases](https://github.com/fabiochequeribeiro/orcafacil-servicos/releases).
 - Android: APK 1.30.1 recuperado. O projeto original e a assinatura compatível para produzir o APK 1.30.2 ainda precisam ser recuperados ou confirmados.
 - O teste de sincronização de 1.30.2 com o celular e o backup restaurável dos dados ainda estão pendentes.
+
+## Assinatura Android recuperada
+
+Os APKs 1.30.0 e 1.30.1 têm o mesmo certificado público SHA-256, `FAC61745DC0903786FB9EDE62A962B399F7348F0BB6F899B8332667591033B9C`. Esse valor também consta na documentação do Android 1.3. Ele serve para conferir uma chave recuperada, sem substituir a chave privada usada para assinar.
