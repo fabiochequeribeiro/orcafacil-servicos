@@ -12,6 +12,6 @@
 
 ## Estado em 24/11/2026
 
-- Windows 1.30.2 de teste: atualizador disponível no [rascunho de recuperação](https://github.com/fabiochequeribeiro/orcafacil-servicos/releases/edit/untagged-9da89af605537eb399a5).
+- Windows 1.30.2 de teste: atualizador e ZIP de reconstrução disponíveis no rascunho **Orça Fácil Pro — backup dos instaladores**, na [página de releases](https://github.com/fabiochequeribeiro/orcafacil-servicos/releases).
 - Android: APK 1.30.1 recuperado. O projeto original e a assinatura compatível para produzir o APK 1.30.2 ainda precisam ser recuperados ou confirmados.
 - O teste de sincronização de 1.30.2 com o celular e o backup restaurável dos dados ainda estão pendentes.
