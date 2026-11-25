@@ -20,6 +20,15 @@ Fluxo retroativo: registrar um serviço feito diretamente como **Finalizado**, c
 
 Se o serviço já foi executado, o usuário pode finalizar diretamente um pedido existente. Permitir acrescentar depois valor, itens, fotos, PDF, assinatura, CNPJ e comprovante de aprovação. Aprovação por mensagem fica registrada como tal, com data e um ou mais anexos, separada do contrato assinado. Se o aceite não estiver documentado, a pendência permanece visível.
 
+## Fotos e relatório no mesmo pedido
+
+- **Registrar serviço já feito** oferece **Fotos do antes** e **Fotos do depois** no próprio lançamento, com seleção de várias imagens e identificação opcional por ambiente, ponto ou etapa.
+- Ao finalizar um pedido existente, recuperar automaticamente as fotos de vistoria que já pertencem ao orçamento. O usuário só acrescenta ou associa as fotos do depois, sem carregar novamente as do antes.
+- Aproveitar os pares de fotos e o relatório final existentes. O atalho pode salvar e seguir para **Revisar relatório**, sem abrir outro pedido ou criar outro modelo de relatório.
+- **Finalizar serviço** registra que a execução aconteceu. **Emitir relatório** registra o documento no momento em que o conteúdo estiver conferido. Fotos ausentes viram pendências visíveis e podem ser completadas antes da emissão.
+- Preservar relatórios já emitidos, seus anexos e verificações de integridade. Se novas fotos precisarem entrar depois de uma emissão, tratá-las como revisão documentada.
+- No teste de sincronização, conferir um pedido com mais de um ambiente e múltiplas fotos em cada etapa. Abrir o relatório nos dois aparelhos e conferir o vínculo e a ordem das imagens.
+
 ## Validação e alertas
 
 - Para salvar o lançamento, exigir identificação do cliente ou serviço, descrição e, se marcado como já executado, data de execução válida.
